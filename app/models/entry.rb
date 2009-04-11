@@ -42,8 +42,8 @@ class Entry < ActiveRecord::Base
     "
 
     m = Merb::Mailer.new :to => user.email,
-                         :from => 'storyBot/jmw <jamie@tramchase.com>',
-                         :subject => "[storybored] yr turn in #{self.sheet.game.name}",
+                         :from => 'Storyboard <nobody@jamiedubs.com>',
+                         :subject => "[storyboard] yr turn in #{self.sheet.game.name}",
                          # :html => text,
                          :text => text
     m.deliver!
