@@ -65,8 +65,8 @@
   game in progress
 </h2>
 <h3>
-  started <%= timeago(@game.created_at) %><br />
-  last updated <%= timeago(@game.entries.last.created_at) %>
+  started <%= time_ago_in_words(@game.created_at) %> ago<br />
+  last played <%= time_ago_in_words(@game.entries.last.created_at) %> ago
 </h3>
 
 <% end %>
