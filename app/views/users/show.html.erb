@@ -1,0 +1,14 @@
+
+<h1><%= @user.email.gsub(/\@.*/,'') %></h1>
+<ol>
+<% @user.entries.each do |entry| %>
+	<% game = entry.game if entry.sheet %>
+	<% unless game.nil? -%>
+	<li>
+		<strong><%= link_to game.name, url(:game, :id => game.url) %>: </strong>
+		<%= link_to entry.kind, url(:game, entry.game) unless entry.sheet.nil? %> 
+		<%= entry.pending? ? 'pending' : "played #{entry.identifier_expired_on.strftime("%D %I:%m")}" %>
+	</li>	
+	<% end -%>
+<% end %>
+</ol>

@@ -1,0 +1,18 @@
+---
+# This is a sample database file for the ActiveRecord ORM
+:development: &defaults
+  :adapter: mysql
+  :database: storyboard_dev
+  :username: root
+  :password: 
+  :host: localhost
+
+:test:
+  <<: *defaults
+  :database: storyboard_test
+
+:production:
+  <<: *defaults
+  :database: storyboard_prod
+  :username: storyboard
+  :password: secret

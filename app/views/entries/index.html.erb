@@ -1,0 +1,13 @@
+<h1>entries</h1>
+
+<%= @entries.length %> entries total.
+
+<ul>
+<% @entries.each do |entry| -%>
+	<li>
+		<%= entry.id %>: <strong><%= entry.kind %></strong> from <%= link_to entry.game.name, url(:game, entry.game) %> 
+		by <%= user_link(entry.user, entry) %>
+		= <%= output_value(entry.kind, entry.value) %>
+	</li>
+<% end -%>
+</ul>

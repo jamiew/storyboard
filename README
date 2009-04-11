@@ -1,0 +1,33 @@
+
+  .-:::::' :::. ::::::::::::   :::      :::.     :::::::.  
+  ;;;''''  ;;`;;;;;;;;;;''''   ;;;      ;;`;;     ;;;'';;' 
+  [[[,,== ,[[ '[[,   [[        [[[     ,[[ '[[,   [[[__[[\.
+  `$$$"``c$$$cc$$$c  $$        $$'    c$$$cc$$$c  $$""""Y$$
+   888    888   888, 88,      o88oo,.__888   888,_88o,,od8P
+   "MM,   YMM   ""`  MMM      """"YUMMMYMM   ""` ""YUMMMP" 
+
+
+
+------------- STORYBOARD --------------
+
+Email-based "add to the scene" games
+An image board for cool kids
+http://storybored.org/howto
+
+Usage:
+
+- start a new game
+- N threads will be generated for N players
+- each player adds an image or text to the previous text or image (respectively)
+- in the end you have a story!
+
+
+--------------- ABOUT -----------------
+
+100% open source software
+Ruby, Merb & ActiveRecord
+
+Built by Jamie Wilkinson <http://jamiedubs.com>
+Game design by Bennett Williamson <http://codeblooded.net>
+
+Free Art & Technology Lab <http://fffff.at>

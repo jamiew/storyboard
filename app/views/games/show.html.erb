@@ -1,0 +1,75 @@
+
+<!-- dynamically resize the sheets -->
+<style type="text/css" media="screen">
+	.sheets {
+		width: <%= @game.users.length * 270 %>px;
+	}
+</style>
+
+<div class="box" id="info">
+	<h1><%= @game.name %></h1>
+	<ul>
+		<% if MERB_ENV == 'development' -%><li><strong>		
+			<%= link_to 'initialize', url(:initialize_sheets_game, @game) %> - 
+			<%= link_to 'edit', url(:edit_game, @game) %> -
+			<%= link_to 'delete', url(:action => :destroy, :id => @game.id) %>
+		</strong></li><% end -%>
+		<li>URL: <%= link_to "http://storybored.org/#{@game.url}", url(:game, :id => @game.url) %></li>
+		<li># of turns: <%= @game.turns %></li>
+		</li>
+	</ul>
+</div>
+
+<div class="box border-left" id="users">
+	<h2>players</h2>
+	<% @game.users.each_with_index do |user, index| -%>
+	<ul class="users">
+		<%
+		email = user.email.gsub('@', ' {at} ').gsub('\.', ' {dot} ')
+		url_email = email.gsub(/./) { |c| '%' + c.unpack('H2' * c.size).join('%').upcase }
+		html_email = url_email[1..-1].split(/%/).collect { |c| sprintf("&#%03d;", c.to_i(16)) }.join
+		user.name ||= user.email.gsub(/\@.*/,'')
+		%>
+		<li><%= user_link(user, index) %></li>
+	</ul>
+	<% end -%>
+</div>
+
+<div id="sheets" class="box">
+
+<% if @game.completed? -%>
+<ol class="sheets">
+<% @game.sheets.each do |sheet| -%>
+	<li class="sheet"> <!-- kinda redundant -->
+		<!--
+		#<%= sheet.id %>. <%= sheet.entries.length %> <%= sheet.entries.length > 1 ? 'entries' : 'entry' %>. 
+		<%= link_to sheet.entries.first.user.username, url(:user, sheet.entries.first.user), :class => 'user' %> was first.
+		-->
+	
+		<ol class="entries">
+			<% sheet.entries.each do |entry| -%>
+				<li class="<%= entry.kind %> user-<%= entry.game.users.index(entry.user) %>">
+					<% if entry.completed? -%>
+						<%= output_value entry.kind, entry.value%>
+					<% else -%>
+						<div class="waiting-for-user">waiting for <%= user_link(entry.user, entry) %>! <%= link_to 'send invite again.', url(:send_invite_entry, entry) %></div>
+					<% end -%>
+				</li>
+			<% end -%>
+		</ol>
+	</li>
+<% end -%>
+<% else -%>
+<br /><br />
+<h2>
+  <big>Quiet Please</big><br />
+  game in progress
+</h2>
+<h3>
+  started <%= timeago(@game.created_at) %><br />
+  last updated <%= timeago(@game.entries.last.created_at) %>
+</h3>
+
+<% end %>
+</ol>
+</div>

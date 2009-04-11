@@ -1,0 +1,34 @@
+
+<br class="clear" />
+
+<div id="previous">
+	<h3>prompt</h3>
+	<% entries = @entry.sheet.entries %>
+	<% msg = "" %>
+
+	<% if entries.length == 1 %>
+		you're the first!
+	<% else -%>
+		<% prev = entries[ entries.map { |m| m.id }.index(@entry.id) - 1] rescue (puts "ERROR: puts could not find prev for #{@entry.inspect}...") %>
+		<%= user_link(prev.user, prev) %> added: <br />
+		<%= output_value(prev.kind, prev.value) %>
+	<% end -%>
+</div>
+
+
+<div id="response">
+	<h3>response <strong><%= @entry.kind %></strong></h3>
+	<form action="<%= url(:action => :update, :id => @entry.id) %>" method="POST">
+		<% 
+			label = case @entry.kind
+			when 'image'
+				"Image URL: "
+			when 'text', 'caption'
+				"Caption: "
+			end
+		%>
+		<br />
+		<%= control_for @entry, :value, :text, :size => 60, :label => label, :value => '' %>
+		<input type="submit" value="save" />
+	</form>
+</div>

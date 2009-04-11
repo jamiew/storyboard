@@ -1,0 +1,39 @@
+<!-- completted gamezzz -->
+<div class="box" id="games">
+	<ul id="completed">
+		<% @games.select { |g| g.completed? }.each do |game| %>
+			<li>
+				<strong><%= link_to(game.name, url(:game, :id => game.url)) %></strong>
+				
+				<% images = game.entries.select { |e| e.kind == 'image' } %>
+				<% if images.length > 1 and game.completed? %><%= link_to "<img src=\"#{images.first.value}\" alt=\"\" class=\"thumbnail\"/>", url(:game, :id => game.url) %><% end %>
+
+				<span class="players"><%= game.users.length %> players, <%= game.turns %> turns</span>				
+				<span class="created_at">started <%= timeago(game.created_at) %></span>
+				<span class="updated_at">last updated <%= timeago(game.entries.last.created_at) %></span>
+				<span class="completed">
+					<%= number_with_precision (game.completed_entries.length.to_f / (game.turns.to_f * game.users.length) * 100), 0 %>&#37; complete 
+					(<%= game.completed_entries.length %>/<%= game.users.length * game.turns %>)
+				</span>
+
+			</li>
+		<% end %>
+	</ul>
+
+	<br class="clear" />
+	
+</div>
+
+<!-- incomplete -->
+<div class="box" id="incomplete-games">
+	<ul>
+		<% @games.select { |g| not g.completed? }.each do |game| %>
+			<li>
+				<strong><%= link_to(game.name, url(:game, :id => game.url)) %></strong>
+				<br />
+					<%= number_with_precision (game.completed_entries.length.to_f / (game.turns.to_f * game.users.length) * 100), 0 %>&#37; complete 
+					(<%= game.completed_entries.length %>/<%= game.users.length * game.turns %>)
+			</li>
+		<% end %>
+	</ul>
+</div>

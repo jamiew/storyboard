@@ -1,0 +1,38 @@
+<div class="error">
+	<%= @game.errors.collect { |k,v| "#{k} #{v}" }.join(', ') %>
+</div>
+
+<form action="/games/" method="POST" id="game-form">
+
+	<div class="left border-left">
+		<%= control_for @game, :name, :text, :size => 35, :label => "Name: " %> <br />
+		http://storyboard.org/<%= control_for @game, :url, :text, :size => 26, :label => "" %><br />
+
+		<label for="games[turns]">Turns: </label>
+		<select name="game[turns]" value="" id="game_turns" style="width: 40px;">
+		<% (0..20).each do |num| -%>
+			<option value="<%= num %>" <%= num == 5 ? 'selected' : '' %>><%= num %></option>
+		<% end -%>
+		</select>
+
+	<p>
+		<label for="user[0]">Your email:<br /></label>
+		<input class="player" type="text" name="user[0]" /><br />
+
+	<p>
+		Players' emails:<br />
+		<% 5.times do |num| -%>
+			<% num += 1  #offset due to owner %>
+			<label for="user[<%= num %>]"></label>
+			<input class="player" type="text" name="user[<%= num %>]" /><br />
+			<%#= control_for @user, :name, :text, :size => 40, :label => "Name: " %>
+		<% end -%>
+	
+		<%#= link_to "(+) moar", "#", :id => "add-players-button" %>
+	</p>
+
+
+	<input type="submit" value="start" />
+	</div>
+
+</form>

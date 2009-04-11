@@ -1,0 +1,7 @@
+Show for Sheets
+
+
+<li>
+	<%= link_to "sheet #{sheet.id}", url(:sheet, :id => sheet.identifier) %>, <%= sheet.kind %> = '<%= sheet.value %>' by <%= sheet.user %>
+	<br />identifier: <%= sheet.identifier %> --- expiry: <%= sheet.identifier_expired_on %>
+</li>

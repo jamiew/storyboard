@@ -1,0 +1,21 @@
+<% case style -%>
+<% when :full -%>
+<% game = @entry.game -%>
+<h1>
+	<strong><%= link_to game.name, url(:game, game) %></strong><br />
+	sheet <%= game.sheets.index(@entry.sheet) + 1 %>, 
+	entry <%= @entry.sheet.entries.map { |e| e.id }.index(@entry.id) + 1 %>/<%= game.turns %> (<%= game.turns - @entry.sheet.entries.length + 1%> left)
+</h1>
+<h2><%= link_to @entry.user.username, url(:user, @entry.user), :class => 'user' %>, <%= @entry.identifier_expired_on.strftime("%D %H:%m") if @entry.completed? %></h2>
+
+<div class="value">
+	<%= output_value @entry.kind, @entry.value %>
+</div>
+
+<% when :list_item -%>
+<li class="<%= @entry.kind %>">
+	<%= @entry.id %> = <% @entry.identifier %>, <%= @entry.user.email %> <%= link_to 'permalink', url(:entry, @entry) %>
+	<br /><%= @entry.kind %>: <%= @entry.value || "(empty)" %> 
+	<br />Created <%= @entry.created_at.strftime("%D %H:%S") %>, <%= (@entry.identifier_expired_on ? "expired #{@entry.identifier_expired_on}" : "pending") %>
+</li>
+<% end # style case -%>
