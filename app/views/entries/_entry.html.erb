@@ -1,12 +1,12 @@
 <% case style -%>
 <% when :full -%>
 <% game = @entry.game -%>
-<h1>
+<h2>
 	<strong><%= link_to game.name, url(:game, game) %></strong><br />
 	sheet <%= game.sheets.index(@entry.sheet) + 1 %>, 
 	entry <%= @entry.sheet.entries.map { |e| e.id }.index(@entry.id) + 1 %>/<%= game.turns %> (<%= game.turns - @entry.sheet.entries.length + 1%> left)
-</h1>
-<h2><%= link_to @entry.user.username, url(:user, @entry.user), :class => 'user' %>, <%= @entry.identifier_expired_on.strftime("%D %H:%m") if @entry.completed? %></h2>
+</h2>
+<h3><%= link_to @entry.user.username, url(:user, @entry.user), :class => 'user' %>, <%= @entry.identifier_expired_on.strftime("%D %H:%m") if @entry.completed? %></h3>
 
 <div class="value">
 	<%= output_value @entry.kind, @entry.value %>

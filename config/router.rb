@@ -31,7 +31,11 @@ Merb::Router.prepare do
   # resources :posts
   
   match('/:page', :page => /^(about|howto|contact)/).to(:controller => 'pages', :action => 'show')
-  # match('/howto').to(:controller => 'pages', :action => 'show', :id => 'howto')  
+  # match('/howto').to(:controller => 'pages', :action => 'show', :id => 'howto') 
+
+  resources :games
+  resources :entries
+  resources :users
   
   # Adds the required routes for merb-auth using the password slice
   slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")

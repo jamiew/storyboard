@@ -2,37 +2,49 @@
 	<%= @game.errors.collect { |k,v| "#{k} #{v}" }.join(', ') %>
 </div>
 
-<form action="/games/" method="POST" id="game-form">
 
+<% form = form_for(@game, :action => url(:games)) do %>
 	<div class="left border-left">
-		<%= control_for @game, :name, :text, :size => 35, :label => "Name: " %> <br />
-		http://storyboard.org/<%= control_for @game, :url, :text, :size => 26, :label => "" %><br />
+		<p><%= text_field(:name, :size => 40, :label => "Title of the game: ") %><br />
+		
+		<p>URL: <em>http://storyboard.org/</em>
+		<%= text_field(:url, :size => 20, :label => "") %>		
+		&nbsp;&nbsp;<small>letters, numbers, dashes & underscores only</small>
+		<br />
 
-		<label for="games[turns]">Turns: </label>
+		<p><label for="games[turns]"># of Turns: </label>
 		<select name="game[turns]" value="" id="game_turns" style="width: 40px;">
-		<% (0..20).each do |num| -%>
-			<option value="<%= num %>" <%= num == 5 ? 'selected' : '' %>><%= num %></option>
+		<% (0..10).each do |num| -%>
+			<option value="<%= num %>" <%= num == 4 ? 'selected' : '' %>><%= num %></option>
 		<% end -%>
 		</select>
+		</p>
 
 	<p>
 		<label for="user[0]">Your email:<br /></label>
 		<input class="player" type="text" name="user[0]" /><br />
 
 	<p>
-		Players' emails:<br />
+		Players' emails:
+		<ul>
 		<% 5.times do |num| -%>
 			<% num += 1  #offset due to owner %>
-			<label for="user[<%= num %>]"></label>
-			<input class="player" type="text" name="user[<%= num %>]" /><br />
-			<%#= control_for @user, :name, :text, :size => 40, :label => "Name: " %>
+			<li>
+				<label for="user[<%= num %>]"></label>
+				<input class="player" type="text" name="user[<%= num %>]" />
+			</li>
 		<% end -%>
+	</ul>
+	<!-- <input type="button" value="+" />					 -->
+
 	
 		<%#= link_to "(+) moar", "#", :id => "add-players-button" %>
 	</p>
 
-
-	<input type="submit" value="start" />
+	<p><%= submit 'start' %></p>
+	
 	</div>
 
-</form>
+<% end %>
+<%# FIXME switch to haml %>
+<%= form %>

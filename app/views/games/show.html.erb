@@ -1,4 +1,3 @@
-
 <!-- dynamically resize the sheets -->
 <style type="text/css" media="screen">
 	.sheets {
@@ -9,7 +8,7 @@
 <div class="box" id="info">
 	<h1><%= @game.name %></h1>
 	<ul>
-		<% if MERB_ENV == 'development' -%><li><strong>		
+		<% if ENV['MERB_ENV'] == 'development' -%><li><strong>		
 			<%= link_to 'initialize', url(:initialize_sheets_game, @game) %> - 
 			<%= link_to 'edit', url(:edit_game, @game) %> -
 			<%= link_to 'delete', url(:action => :destroy, :id => @game.id) %>

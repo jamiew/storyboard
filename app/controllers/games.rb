@@ -4,16 +4,16 @@ class Games < Application
   def index
     puts "session: #{session.inspect}"    
     @games = Game.find(:all, :include => :entries)
-    render @games
+    render
   end
   
   def show
-    puts "show: #{params[:id]}"
     @game = Game.find_by_url(params[:id])
     @game ||= Game.find_by_name(params[:id])
     @game ||= Game.find(params[:id]) # try again?
     raise "Could not find show for #{params[:id]}!" if @game.nil?
-    render @game
+    # render @game
+    render :template => 'games/show'
   end
   
   def new
@@ -23,9 +23,8 @@ class Games < Application
   end
   
   def create
-    puts "Game::create"
     @game = Game.new(params[:game])
-    @game.url.gsub!(/\s/, '-') # should do more too
+    @game.url.gsub!(/\s/, '-') # TODO parse out much, much more
     if @game.save
       params[:user].each do |key, value|
         next if key.nil? or value.nil? or value.empty? # skip empties        
@@ -41,7 +40,6 @@ class Games < Application
       # used to be in after_create... hmm
       self.initialize_sheets
 
-      puts "done, redirecting"
       redirect url(:game, :id => @game.url)
     else
       render :inline => '<div class="erorr">'+@game.errors.map { |k,v| "#{k} #{v}" }.join(', ')+"</div>"

@@ -17,7 +17,7 @@ class Entry < ActiveRecord::Base
   def send_invite
     puts "Entry::send_invite; entry id: #{self.id}, identifier: #{self.identifier}, to: #{user.email}"
 
-    server = case MERB_ENV
+    server = case ENV['MERB_ENV']
     when 'production'
       "http://dev.eyebeam.org:4001"
     else
